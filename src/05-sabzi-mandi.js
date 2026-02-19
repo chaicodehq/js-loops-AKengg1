@@ -30,5 +30,19 @@
  *   // => { items: [], totalBill: 0 }
  */
 export function sabziMandiBill(shoppingList, priceList) {
-  // Your code here
+  let items = [];
+  let newpricelist = Object.fromEntries(
+    Object.entries(priceList).filter(([key, val]) => val <= 80),
+  );
+  for (const sabzi of shoppingList) {
+    if (Object.keys(newpricelist).includes(sabzi.name))
+      items.push({
+        name: sabzi.name,
+        qty: sabzi.qty,
+        cost: sabzi.qty * newpricelist[sabzi.name],
+      });
+  }
+  const totalBill = items.reduce((a, e) => a + e.cost, 0);
+
+  return { items, totalBill };
 }
